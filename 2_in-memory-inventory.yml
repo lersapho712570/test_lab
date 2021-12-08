@@ -29,11 +29,11 @@
       loop_control:
         loop_var: instance
 
-- name: Print current hosts
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  tasks:
-    #- debug: var=instances
-    - debug:
-       msg: " {{ instances.openstack_servers[0].private_v4 }} "
+#- name: Print current hosts
+#  hosts: localhost
+#  connection: local
+#  gather_facts: false
+#  tasks:
+#    #- debug: var=instances
+#    - debug:
+#       msg: " {{ instances.openstack_servers[0].private_v4 }} "
