@@ -1,0 +1,7 @@
+---
+- name: Playbook - Ping Test
+  hosts: load_balancers
+  tasks:
+    - name: Task - Ping
+      ping:
+
