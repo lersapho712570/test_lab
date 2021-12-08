@@ -1,0 +1,10 @@
+---
+- import_playbook: 2_in-memory-inventory.yml
+
+- name: Play to setup mysql server
+  hosts: load_balancers
+  become: true
+  roles:
+    #- role: database
+    #- role: app
+    - role: load_balancers

@@ -1,0 +1,9 @@
+---
+- import_playbook: 2_in-memory-inventory.yml
+
+- name: Playbook - Ping Test
+  hosts: load_balancers
+  tasks:
+    - name: Task - Ping
+      ping:
+

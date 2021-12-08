@@ -1,0 +1,22 @@
+---
+- import_playbook: 2_in-memory-inventory.yml
+
+- name: End to end smoke tests
+  hosts: app_servers
+  become: false
+  gather_facts: false
+  tags:
+    - smoketest  
+  tasks:
+ 
+    - name: Check webserver for correct response
+      uri:
+        url: "http://192.168.51.16/ping"
+        #url: "http://frontend1.example.com/ping"
+        return_content: yes
+      until: '"alive" in result.content'
+      retries: 10
+      delay: 1
+      register: result
+      delegate_to: localhost
+

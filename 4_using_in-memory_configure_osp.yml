@@ -1,0 +1,3 @@
+---
+- import_playbook: 2_in-memory-inventory.yml
+- import_playbook: 3_update_configure_osp.yml
