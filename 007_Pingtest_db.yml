@@ -1,6 +1,6 @@
 ---
 - name: Playbook - Ping Test
-  hosts: load_balancers
+  hosts: database_servers
   tasks:
     - name: Task - Ping
       ping:
