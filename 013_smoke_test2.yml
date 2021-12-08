@@ -1,6 +1,4 @@
 ---
-- import_playbook: 2_in-memory-inventory.yml
-
 - name: End to end smoke tests
   hosts: app_servers
   become: false
