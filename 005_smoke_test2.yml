@@ -1,5 +1,21 @@
 ---
-- import_playbook: 2_in-memory-inventory.yml
+- name: Gather OSP
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Collection instance info
+      os_server_info:
+      register: instances
+
+    - name: Set Fact
+      set_fact:
+        frontend1: "{{ myvar.private_v4 }}"
+      when: myvar.metadata.AnsibleGroup == "load_balancers"
+      loop: "{{ instances.openstack_servers }}"
+      loop_control:
+        loop_var: myvar
+
 
 - name: End to end smoke tests
   hosts: app_servers
