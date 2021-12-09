@@ -9,5 +9,6 @@
 
     - name: Collection instance info
       os_server_info:
-        cloud: "5f64-project"
+        #cloud: "5f64-project"
+        devstack: "5f64-project"
       register: instances
