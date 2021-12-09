@@ -36,9 +36,9 @@
   become: false
   gather_facts: false
   tags:
-    - smoketest  
+    - smoketest
   tasks:
- 
+
     - name: Check webserver for correct response
       uri:
         url: "http://{{ hostvars['localhost']['frontend1'] }}/ping"
@@ -48,4 +48,3 @@
       delay: 1
       register: result
       delegate_to: localhost
-
