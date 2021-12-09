@@ -5,14 +5,15 @@
   hosts: app_servers
   become: false
   gather_facts: false
+  vars_files: ip_address.yml
   tags:
     - smoketest  
   tasks:
  
     - name: Check webserver for correct response
       uri:
-        url: "http://192.168.51.16/ping"
-        #url: "http://frontend1.example.com/ping"
+        #url: "http://{{ frontend1 }}/ping"
+        url: "http://{{ hostvars['localhost']['frontend1'] }}/ping"
         return_content: yes
       until: '"alive" in result.content'
       retries: 10
@@ -20,3 +21,6 @@
       register: result
       delegate_to: localhost
 
+    - name: Print
+      debug:
+        msg: " {{ hostvars['localhost']['frontend1'] }} "

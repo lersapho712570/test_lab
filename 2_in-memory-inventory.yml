@@ -29,11 +29,12 @@
       loop_control:
         loop_var: instance
 
-#- name: Print current hosts
-#  hosts: localhost
-#  connection: local
-#  gather_facts: false
-#  tasks:
-#    #- debug: var=instances
-#    - debug:
-#       msg: " {{ instances.openstack_servers[0].private_v4 }} "
+
+    - name: Set Fact
+      set_fact:
+        frontend1: "{{ myvar.private_v4 }}"
+      when: myvar.metadata.AnsibleGroup == "load_balancers"
+      loop: "{{ instances.openstack_servers }}"
+      loop_control:
+        loop_var: myvar
+
