@@ -12,7 +12,6 @@
  
     - name: Check webserver for correct response
       uri:
-        #url: "http://{{ frontend1 }}/ping"
         url: "http://{{ hostvars['localhost']['frontend1'] }}/ping"
         return_content: yes
       until: '"alive" in result.content'
@@ -21,6 +20,3 @@
       register: result
       delegate_to: localhost
 
-    - name: Print
-      debug:
-        msg: " {{ hostvars['localhost']['frontend1'] }} "
