@@ -10,5 +10,9 @@
     - name: Collection instance info
       os_server_info:
         #cloud: "5f64-project"
-        region_name: "{{ openstack_region | default('regionOne') }}"
+        #region_name: "{{ openstack_region | default('regionOne') }}"
       register: instances
+
+
+    - name: Listing Group
+      debug: var=instances
