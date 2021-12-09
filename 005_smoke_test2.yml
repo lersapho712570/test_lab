@@ -1,12 +1,26 @@
 ---
+
 - name: Gather OSP
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    internal_domain: "example.com"
   tasks:
     - name: Collection instance info
       os_server_info:
       register: instances
+
+    - name: Build In-Memory inventory
+      add_host:
+        host: "{{ instance.name }}.{{ internal_domain }}"
+        ansible_user: cloud-user
+        group: "{{ instance.metadata.AnsibleGroup }}"
+        ansible_host: "{{ instance.private_v4 }}"
+      when: instance.metadata.AnsibleGroup == "load_balancers" or instance.metadata.AnsibleGroup == "app_servers" or instance.metadata.AnsibleGroup == "database_servers"
+      loop: "{{ instances.openstack_servers }}"
+      loop_control:
+        loop_var: instance
 
     - name: Set Fact
       set_fact:
@@ -21,18 +35,16 @@
   hosts: app_servers
   become: false
   gather_facts: false
-  vars_files: ip_address.yml
   tags:
-    - smoketest  
+    - smoketest
   tasks:
- 
+
     - name: Check webserver for correct response
       uri:
-        url: "http://frontend1/ping"
+        url: "http://{{ hostvars['localhost']['frontend1'] }}/ping"
         return_content: yes
       until: '"alive" in result.content'
       retries: 10
       delay: 1
       register: result
       delegate_to: localhost
-
